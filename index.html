@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>VictusMC Official Website</title>
+    <link rel="icon" href="https://qu.ax/DBZuJ.png" type="image/png">
+
+    <!-- Link al font Jura tramite Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Jura:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <style>
+        /* CSS globale */
+        body {
+            font-family: 'Jura', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #121212;
+            color: #f4f4f9;
+            transition: all 0.3s ease-in-out;
+            opacity: 0;
+            animation: fadeIn 2s forwards;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Animazione di Fade-In */
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        /* Box per il logo sopra l'intestazione */
+        .logo-box {
+            width: 150px;
+            height: 150px;
+            background-color: #121212;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px auto;
+            border-radius: 50%;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6);
+        }
+
+        .logo-box img {
+            width: 90%;
+            height: auto;
+            object-fit: contain;
+            border-radius: 10px;
+        }
+
+        /* Intestazione */
+        header {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-bottom: 1px solid #444;
+            animation: bounceIn 1s ease-out;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            font-size: 28px;
+            color: #f4f4f9;
+        }
+
+        header nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 30px;
+        }
+
+        header nav ul li a {
+            font-size: 16px;
+            color: #bbb;
+            transition: color 0.3s ease;
+        }
+
+        header nav ul li a:hover {
+            color: #e63946;
+        }
+
+        /* Sezione Hero */
+        .hero {
+            background: linear-gradient(135deg, #1d3557, #e63946);
+            padding: 120px 20px;
+            text-align: center;
+            color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero h2 {
+            font-size: 40px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .hero p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cta-btn {
+            background-color: #0e335a; /* Cambiato a blu */
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 18px;
+            border: none;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+            margin-top: 20px; /* Abbassato il tasto */
+        }
+
+        .cta-btn:hover {
+            background-color: #0e335a;
+            transform: translateY(-4px);
+        }
+
+        /* Aggiunto per la disposizione orizzontale dei tasti */
+        .hero button {
+            margin-right: 10px; /* Spazio tra i tasti */
+        }
+
+        .hero a {
+            display: inline-block;
+        }
+
+        /* Sezione Info */
+        .about {
+            background-color: #222222;
+            padding: 60px 20px;
+            text-align: center;
+            animation: bounceIn 1s ease-out;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+            margin-top: 40px;
+        }
+
+        .about h3 {
+            font-size: 30px;
+            color: #f4f4f9;
+            margin-bottom: 20px;
+        }
+
+        .about p {
+            font-size: 18px;
+            color: #bbb;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Popup */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .popup.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .popup-content {
+            background-color: #333;
+            padding: 40px;
+            border-radius: 12px;
+            text-align: center;
+            width: 80%;
+            max-width: 600px;
+            animation: popupAnim 0.5s ease-out;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .popup-content h3 {
+            color: #f4f4f9;
+            margin-bottom: 20px;
+        }
+
+        .popup-content .btn {
+            background-color: #e63946;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 16px;
+            margin: 10px;
+            cursor: pointer;
+            border: none;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .popup-content .btn:hover {
+            background-color: #d62828;
+            transform: translateY(-4px);
+        }
+
+        /* Animazione del popup */
+        @keyframes popupAnim {
+            0% { opacity: 0; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        /* Copia IP */
+        #copyIPBtn {
+            background-color: #2d6a4f;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 16px;
+            margin: 10px;
+            cursor: pointer;
+            border: none;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        #copyIPBtn:hover {
+            background-color: #1b4d3e;
+            transform: translateY(-4px);
+        }
+
+        /* Media Queries per dispositivi mobili */
+        @media (max-width: 768px) {
+            header .container {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .hero h2 {
+                font-size: 28px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            .cta-btn {
+                font-size: 16px;
+            }
+
+            .about h3 {
+                font-size: 24px;
+            }
+
+            .about p {
+                font-size: 16px;
+            }
+        }
+
+        /* Modifica iframe YouTube */
+        #popupJoin iframe {
+            width: 100%;
+            height: 600px; /* Aumentato la dimensione */
+            border: none;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Box Logo -->
+    <div class="logo-box">
+        <img src="https://i.pinimg.com/736x/8e/a1/0f/8ea10fb13bbd0c47de44e1412b01718c.jpg" alt="Logo Minecraft" />
+    </div>
+
+    <header>
+        <div class="container">
+            <h1>Benvenuti sul <span class="server-name">VictusMC</span></h1>
+            <nav>
+                <ul>
+                    <li><a href="#"></a></li>
+                    <li><a href="#"></a></li>
+                    <li><a href="#"></a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h2>Unisciti al nostro server!</h2>
+        <p>Entra nel mondo di Minecraft con una community attiva, eventi esclusivi e tanto divertimento!</p>
+        <button class="cta-btn" id="joinBtn">Unisciti ora</button>
+    </section>
+
+    <section class="about">
+        <h3>Chi Siamo</h3>
+        <p>Il nostro staff è sempre pronto ad accogliere i nuovi giocatori! Offriamo tante modalità divertenti: PvP, Sumo, OnlyUp, Nascondino e Vanilla. Unisciti a noi per vivere un'esperienza unica e divertente!</p>
+    </section>
+
+    <!-- Popup Iniziale -->
+    <div id="popupMain" class="popup">
+        <div class="popup-content">
+            <h3>Seleziona una delle opzioni:</h3>
+            <button class="btn" id="btnJoin">Come Entrare</button>
+            <button class="btn" id="btnFollow">Seguici Sui Social</button>
+            <button class="btn" id="btnServer">IP Del Server</button>
+        </div>
+    </div>
+
+    <!-- Popup "Come entrare" -->
+    <div id="popupJoin" class="popup">
+        <div class="popup-content popup-video">
+            <h3>Guarda il video per scoprire come entrare!</h3>
+            <iframe src="https://www.youtube.com/embed/DXrY32bC_sw" frameborder="0" allowfullscreen></iframe>
+            <button class="btn" id="closeJoin">Chiudi</button>
+        </div>
+    </div>
+
+    <!-- Popup "Seguici sui social" -->
+    <div id="popupSocial" class="popup">
+        <div class="popup-content">
+            <h3>Seguici sui social:</h3>
+            <a href="https://www.tiktok.com/@filyy5040" target="_blank"><button class="btn">TikTok</button></a>
+            <a href="https://www.youtube.com/@victusmcreal" target="_blank"><button class="btn">YouTube</button></a>
+            <button class="btn" id="closeSocial">Chiudi</button>
+        </div>
+    </div>
+
+    <!-- Popup "IP del server" -->
+    <div id="popupServer" class="popup">
+        <div class="popup-content">
+            <h3>IP del Server:</h3>
+            <p><strong id="serverIP">VictusMC.aternos.me</strong></p>
+            <p>Minecraft Java e Bedrock (1.20.2 - 1.21.x)</p>
+            <button class="btn" id="copyIPBtn">Copia IP</button>
+            <button class="btn" id="closeServer">Chiudi</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 VictusMC - Tutti i diritti riservati.</p>
+    </footer>
+
+    <script>
+        // Variabili per il controllo dei popup
+        const joinBtn = document.getElementById('joinBtn');
+        const popupMain = document.getElementById('popupMain');
+        const btnJoin = document.getElementById('btnJoin');
+        const btnFollow = document.getElementById('btnFollow');
+        const btnServer = document.getElementById('btnServer');
+        const popupJoin = document.getElementById('popupJoin');
+        const popupSocial = document.getElementById('popupSocial');
+        const popupServer = document.getElementById('popupServer');
+        const closeJoin = document.getElementById('closeJoin');
+        const closeSocial = document.getElementById('closeSocial');
+        const closeServer = document.getElementById('closeServer');
+        const copyIPBtn = document.getElementById('copyIPBtn');
+        const serverIP = document.getElementById('serverIP');
+
+        // Apre il popup iniziale quando si clicca "Unisciti ora"
+        joinBtn.addEventListener('click', () => {
+            popupMain.classList.add('active');
+        });
+
+        // Mostra il popup "Come entrare"
+        btnJoin.addEventListener('click', () => {
+            popupMain.classList.remove('active');
+            popupJoin.classList.add('active');
+        });
+
+        // Mostra il popup "Seguici sui social"
+        btnFollow.addEventListener('click', () => {
+            popupMain.classList.remove('active');
+            popupSocial.classList.add('active');
+        });
+
+        // Mostra il popup "IP del server"
+        btnServer.addEventListener('click', () => {
+            popupMain.classList.remove('active');
+            popupServer.classList.add('active');
+        });
+
+        // Chiudi il popup "Come entrare"
+        closeJoin.addEventListener('click', () => {
+            popupJoin.classList.remove('active');
+        });
+
+        // Chiudi il popup "Seguici sui social"
+        closeSocial.addEventListener('click', () => {
+            popupSocial.classList.remove('active');
+        });
+
+        // Chiudi il popup "IP del server"
+        closeServer.addEventListener('click', () => {
+            popupServer.classList.remove('active');
+        });
+
+        // Copia l'IP negli appunti
+        copyIPBtn.addEventListener('click', () => {
+            const textArea = document.createElement('textarea');
+            textArea.value = serverIP.textContent;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+            alert('IP copiato negli appunti!');
+        });
+    </script>
+</body>
+</html>
